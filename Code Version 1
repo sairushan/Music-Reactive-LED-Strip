@@ -1,0 +1,53 @@
+// Tutorial on DIY TECH TUBE https://youtu.be/gQ3qVFU4RZk
+#include <FastLED.h>
+
+#define LED_PIN     7
+#define NUM_LEDS    60 //Enter number of LEDS
+int r,g,b;
+
+CRGB leds[NUM_LEDS];
+
+void setup() {
+
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+    pinMode(A0,INPUT);
+
+}
+
+void loop() {
+  
+int j;
+j=(528-analogRead(A0))*2;// Change Sensitivity
+if(j<0)
+j= -j;
+if(j<29)
+ { for (int i = 0; i <= j; i++) {
+   if(i<10)
+   {
+    r=255;
+    g=0;
+    b=0;}
+    else if(i<20)
+    { r=0;
+    g=255;
+    b=0;}
+    else
+    { r=0;
+    g=0;
+    b=255;}
+      
+    leds[29-i] = CRGB ( r, g, b);
+    leds[29+i] = CRGB ( r, g, b);
+    FastLED.show();
+    
+  }
+ 
+  for (int i = j; i <= 29; i++) 
+  {
+     leds[29-i] = CRGB ( 0, 0, 0);
+     leds[i+29]= CRGB ( 0, 0, 0);
+    FastLED.show();
+  }
+  }
+}
+  
